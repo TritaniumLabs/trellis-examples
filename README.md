@@ -51,10 +51,11 @@ The **/trellisGet** endpoint is used to read the most recent hash and optional d
 	<td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td>
 </tr>
 </table>
-12345
+Any results returned by this endpoint validates that that hash exists on the blockchain.
 
 ### Results
-{"created_by":"31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1",<br>
+{<br>
+"created_by":"31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1",<br>
 "timestamp":"15586269331295",<br>
 "view_key":"42e79626400a8c069bebcc1f458913624e415be80f6e3f1944a7b430eaea4c0c",<br>
 "assets":[<br>
@@ -75,6 +76,8 @@ be returned.
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
 <tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
 </table>
+Since the transaction block number is specified, there is no guarantee that the record is the latest transaction for the hash.  The endpoint verifies that the 
+is contained in the specified transaction by reading the transaction directly from a blockchain node bypassing any metadata stored to manage blockchain data.
 
 ### Results
 {<br>"amount":-100100,<br>"blockIndex":359355,<br>"extra":"",<br>"fee":100,<br>"isBase":false,<br>
@@ -98,5 +101,9 @@ be returned.
 <tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
 <tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
-<tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
 </table>
+The endpoint returns a list of block transaction in the order in which they were created.
+
+## Creating Blockchain Addresses
+The **/createAddress** endpoint can be used to add additional addresses to your account to separate data between clients.  The user has the option of using the 
+default blockchain address for all transactions posted or using a different blockchain address for each client.
