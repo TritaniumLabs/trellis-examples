@@ -1,1 +1,2 @@
 # The Traceability Blockchain API for Trellis
+The Traceability Blockchain API for Trellis allows the Trellis Framework to post external block hashes and optional data on the Traceability Blockchain.  Hashes, addresses, and signatures posted to the Traceability Blockchain are stored on the immutable ledger and included in the blockchain Proof of Work.  
