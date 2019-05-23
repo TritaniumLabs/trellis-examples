@@ -74,12 +74,15 @@ be returned.
 <tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
 <tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
-<tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
+<tr><td>block</td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
 </table>
 Since the transaction block number is specified, there is no guarantee that the record is the latest transaction for the hash.  The endpoint verifies that the 
 is contained in the specified transaction by reading the transaction directly from a blockchain node bypassing any metadata stored to manage blockchain data.
 
 ### Results
+The **block_data** field returns contains the data related to the hash posted to the blockchain.  The other fields returned by this endpoint include transaction data that is
+related to a crypto transfer used to pay the miners for processing the block where the transaction is mined.  The record will not be returned unless the block_data->BLOCK_HASH value 
+matches the hash parameter supplied.<br>&nbsp;<br>
 {<br>"amount":-100100,<br>"blockIndex":359355,<br>"extra":"",<br>"fee":100,<br>"isBase":false,<br>
 "paymentId":"",<br>"state":0,<br>"timestamp":1558567062,<br>
 "transactionHash":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9",<br>
@@ -95,7 +98,7 @@ is contained in the specified transaction by reading the transaction directly fr
 }<br>}<br>}<br>
 
 ## **/trellisHistory**
-The **/trellisHistory** endpoint is used to return a list of blockchain transactions where the hash was posted.  The hash value must exist in at least one transaction to
+The **/trellisHistory** endpoint is used to return a list of blockchain transactions where a hash was posted.  The hash value must exist in at least one transaction to
 be returned.
 <table>
 <tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
@@ -107,3 +110,7 @@ The endpoint returns a list of block transaction in the order in which they were
 ## Creating Blockchain Addresses
 The **/createAddress** endpoint can be used to add additional addresses to your account to separate data between clients.  The user has the option of using the 
 default blockchain address for all transactions posted or using a different blockchain address for each client.
+
+{<br>
+"hash":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9",<br>
+"history":["4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"],"current_block":"4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"}
