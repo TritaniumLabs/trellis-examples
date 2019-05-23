@@ -1,10 +1,10 @@
 <?php
 //==========================================================================
 // Tritanium Labs USA LLC
-// Simple Call using POST
+// Simple Call using GET
 //
 // This PHP example uses curl to call the trellisTransGet/ endpoint using 
-// the POST method.
+// the GET method.
 //
 //==========================================================================
 
