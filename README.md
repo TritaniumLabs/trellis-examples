@@ -4,6 +4,7 @@ The Traceability Blockchain API for Trellis allows the Trellis Framework to post
 Systems posting to the Traceability Blockchain must have a authentication key and a default blockchain address.  The authentication key and the default blockchain address are both 64 character values.  The Trellis service has the option of posting all transaction using a single blockchain address or creating separate blockchain addresses for each physical location or client.
 The **auth_key** parameter must be provided with the authentication key and the blockchain address connected with a colon (:)<br>&nbsp;<br>
 For Example: *authkey:blockchainaddress*<br>&nbsp;<br>
+In addition, a list of IP address can be added to a whitelist to ensure that only valid IP addresses can post the the API.<br>&nbsp;<br>
 ## Methods Supported
 The Traceability Blockchain API for Trellis supports both GET and POST methods.  
 ## Posting Data 
@@ -105,12 +106,15 @@ be returned.
 <tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
 </table>
-The endpoint returns a list of block transaction in the order in which they were created.
-
+The endpoint returns a list of block transaction in the order in which they were created.<br>&nbsp;<br>
+{<br>
+"hash":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9",<br>
+"history":["4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"],<br>
+"current_block":"4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"<br>
+}<br>&nbsp;<br>
+The **history** field contains an array of block transaction hashes that can be used with the **trellisTransGet** endpoint to determine more information related to each version 
+of the data posted.<br>
 ## Creating Blockchain Addresses
 The **/createAddress** endpoint can be used to add additional addresses to your account to separate data between clients.  The user has the option of using the 
 default blockchain address for all transactions posted or using a different blockchain address for each client.
 
-{<br>
-"hash":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9",<br>
-"history":["4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"],"current_block":"4cdcb0bbbc7142949a6889ab919feb81768ce72921f8eb95a2139d7ba2cb7aea"}
