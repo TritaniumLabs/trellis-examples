@@ -36,10 +36,23 @@ where the hash was stored.
 ## **/trellisGet**
 The **/trellisGet** endpoint is used to read the most recent hash and optional data from the Traceability Blockchain. 
 <table>
-<tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
-<tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
-<tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
+<tr><th>Parameter</th>
+    <th>Required</th>
+	<th>Description</th>
+</tr>  
+<tr>
+    <td>auth_key</td>
+	<td>Yes</td>
+	<td>The combination secret key and blockchain address for the entity posting the document</td>
+</tr>
+<tr>
+    <td>hash</td>
+	<td>Yes</td>
+	<td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td>
+</tr>
 </table>
+12345
+
 ### Results
 {"created_by":"31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1",<br>
 "timestamp":"15586269331295",<br>
@@ -62,6 +75,7 @@ be returned.
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
 <tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
 </table>
+
 ### Results
 {<br>"amount":-100100,<br>"blockIndex":359355,<br>"extra":"",<br>"fee":100,<br>"isBase":false,<br>
 "paymentId":"",<br>"state":0,<br>"timestamp":1558567062,<br>
