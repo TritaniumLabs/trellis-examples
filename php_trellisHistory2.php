@@ -2,7 +2,7 @@
 //==========================================================================
 /* Tritanium Labs USA LLC
 
-Simple Call using GET method and /trellisHistory endpoint.
+Simple Call using curl with the GET method and /trellisHistory endpoint.
 
 This example is equivalent to using your browser to navigate to:
 
@@ -22,6 +22,5 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $result = curl_exec($ch);
 curl_close($ch);
 echo $result;
-
 
 ?>
