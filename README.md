@@ -12,6 +12,77 @@ The **/trellisPut** endpoint is used to post data to the Traceability Blockchain
 <tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
 <tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
 <tr><td>hash</td><td>Yes</td><td>The hash value or signature of the data posted.  This is the primary key protected and validated by the blockchain</td></tr>
-<td><td>*others*</td>No</td><td>Any number of optional parameters may be added. *timestamp, address, view_key,* and *signature* are reserved words and cannot be used. </td></tr>
+<tr><td>*others*</td><td>No</td><td>Any number of optional parameters may be added. timestamp, address, view_key, and signature are reserved words and cannot be used. </td></tr>
 </table>
+You can additional optional data fields to the document by running the **/trellisPut** endpoint multiple times.  The system maintains all versions of the data posted and maintains an internal history of changes.
+### Results
+The endpoint returns a JSON object:<br>&nbsp;<br>
 
+{<br>
+"code":"0",<br>
+"message":"Transaction Complete",<br>
+"transactionHash":"47d31b01c787bdc6293685a6c8a0b1bd23a77fd84c9ef9f2ac0d143567f9c715",<br>
+"hash":"1234567890a123456789b123456789c123456789d123456789e123456789f1234",<br>
+"addresses":["31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1"],<br>
+"signatures":["1234567890a123456789b123456789c123456789d123456789e123456789f1234"]<br>
+}<br>
+ 
+Any return code other than 0 is an error.  The **transactionHash** return value contains the hash value of the transaction storing the data on the Traceability Blockchain.  If
+you plan to use the **/trellisTransGet** endpoint to read data directly from the transaction block, you must store this value for future reference.  
+## Reading / Validating Data 
+The **/trellisGet** endpoint returns the most recent value of the data posted to the blockchain including optional data.  The **/trellisTransGet** endpoint returns the blockchain 
+transaction data for the record based on the blockchain transaction number. This endpoint does not return optional data. The **/trellisHistory** endpoint returns a list of transactions 
+where the hash was stored.
+## **/trellisGet**
+The **/trellisGet** endpoint is used to read the most recent hash and optional data from the Traceability Blockchain. 
+<table>
+<tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
+<tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
+<tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
+</table>
+### Results
+{"created_by":"31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1",<br>
+"timestamp":"15586269331295",<br>
+"view_key":"42e79626400a8c069bebcc1f458913624e415be80f6e3f1944a7b430eaea4c0c",<br>
+"assets":[<br>
+ {"id":"1234567890a123456789b123456789c123456789d123456789e123456789f1234",<br>
+ "hash":"1234567890a123456789b123456789c123456789d123456789e123456789f1234",<br>
+ "block":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9"}<br>
+ ],<br>
+ "hash":"1234567890a123456789b123456789c123456789d123456789e123456789f1234",<br>
+ "addresses":["31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1"],<br>
+ "signatures":["1234567890"],"id":"47d31b01c787bdc6293685a6c8a0b1bd23a77fd84c9ef9f2ac0d143567f9c715"<br>
+ }<br>
+## **/trellisTransGet**
+The **/trellisTransGet** endpoint is used to validate a hash with in a specific blockchain transaction.  The hash value must exist in the specific transaction for it to 
+be returned.
+<table>
+<tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
+<tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
+<tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
+<tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
+</table>
+### Results
+{<br>"amount":-100100,<br>"blockIndex":359355,<br>"extra":"",<br>"fee":100,<br>"isBase":false,<br>
+"paymentId":"",<br>"state":0,<br>"timestamp":1558567062,<br>
+"transactionHash":"27b4245994aa08e837d07421f0e18e478f622e2422bc3ce475690b16d6190ee9",<br>
+"transfers":[<br>
+{<br>"address":"Tri1boxUhdA3aBscaUHHSrcjyz9EXxeYNJh8wfbZA1nhHvEEWHekqcFTHpNXC2ryrhiy6MsBX89sEHueEr5PqoFT4FkuEXghHt",<br>
+"amount":100000,<br>"type":0<br>},<br>{<br>"address":"Tri1V77aY91PinSj9wrGaM2S3EmYZfSDjGgsxPfGsWrRF9ecDAtbS5iJ4sqTsXadRZ6umSqu9LM1aRRwxTn1GSRw9B7fnpjBsC",<br>
+"amount":779900,<br>"type":2}<br>,{<br>"address":"Tri1V77aY91PinSj9wrGaM2S3EmYZfSDjGgsxPfGsWrRF9ecDAtbS5iJ4sqTsXadRZ6umSqu9LM1aRRwxTn1GSRw9B7fnpjBsC",<br>
+"amount":-880000,<br>"type":0<br>}<br>],"unlockTime":0,<br>"block_data":<br>{"TIME_STAMP":"15585670610187",<br>
+"BLOCK_HASH":"123456789a123456789b123456789c123456789d123456789e123456789f1234",<br>
+"BLOCK_URL":{<br>
+"a":["31a151d30363396042c3d1977a5763b18b90cb7f95192b9f06e7824c626862c1"],<br>
+"s":["123456789a123456789b123456789c123456789d123456789e123456789f1234"]<br>
+}<br>}<br>}<br>
+
+## **/trellisHistory**
+The **/trellisHistory** endpoint is used to return a list of blockchain transactions where the hash was posted.  The hash value must exist in at least one transaction to
+be returned.
+<table>
+<tr><th>Parameter</th><th>Required</th><th>Description</th></tr>  
+<tr><td>auth_key</td><td>Yes</td><td>The combination secret key and blockchain address for the entity posting the document</td></tr>
+<tr><td>hash</td><td>Yes</td><td>The hash value or signature to be returned.  This must be a valid hash posted to the blockchain</td></tr>
+<tr><td>block/td><td>Yes</td><td>The hash value of the block transaction where the data is location on the blockchain.</td></tr>
+</table>
